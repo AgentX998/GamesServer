@@ -174,7 +174,7 @@ async def echo(ws:WebSocketServerProtocol):
             if not users[m[1]]['gameData'] is {} and users[m[1]]['gameData']['light']==2:
                 gid=str(users[m[1]]['gameData']['id'])
                 count = int(users[m[1]]['currentWord'])
-                total = len(games[id]['sentence'])
+                total = len(games[gid]['sentence'])
                 if(total>count):
                     users[m[1]]['currentWord'] = count + 1
                     mi = users[m[1]]['myIndex']
