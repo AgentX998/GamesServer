@@ -1,5 +1,6 @@
 import asyncio
 import json
+import random
 import time
 from db import insert_score
 from websockets import serve
@@ -13,9 +14,13 @@ from websockets import WebSocketServerProtocol
 users=dict()
 games=dict()
 
-paragraph='I cant tell you that this is definitely gonna work out, theres no guarantees. But if this turns out to be a big mistake, then lets make it the most fun, big mistake weve ever made.'
-xx= paragraph.split(" ")
-print(len(xx))
+
+f = open('l4.txt','r')
+lines = f.readlines()
+print(lines[0])
+#paragraph='I cant tell you that this is definitely gonna work out, theres no guarantees. But if this turns out to be a big mistake, then lets make it the most fun, big mistake weve ever made.'
+#xx= paragraph.split(" ")
+#print(len(xx))
 
 
 
@@ -40,7 +45,7 @@ def update_vals(id):
         games[id]['light']=l
         if l == 2 and t>0:
             games[id]['time'] = str(int(t / 60)) + ":" + str(int(t % 60))
-            total = len(xx)
+            total = len(games[id]['sentence'])
 
             for pl in games[id]['players']:
                 curr = int(pl["currentWord"])
@@ -81,7 +86,7 @@ def create_game(game_type,email,id,type,num):
     "type":"random",#random
     "timestamp_created":0,
     "light": 0,
-    "sentence": paragraph,
+    "sentence": lines[random.randint(0,8273)],
     "noOfPlayers": 2,
     "joined":0,
     "players": [
@@ -169,7 +174,7 @@ async def echo(ws:WebSocketServerProtocol):
             if not users[m[1]]['gameData'] is {} and users[m[1]]['gameData']['light']==2:
                 gid=str(users[m[1]]['gameData']['id'])
                 count = int(users[m[1]]['currentWord'])
-                total = len(xx)
+                total = len(games[id]['sentence'])
                 if(total>count):
                     users[m[1]]['currentWord'] = count + 1
                     mi = users[m[1]]['myIndex']
@@ -188,7 +193,7 @@ async def echo(ws:WebSocketServerProtocol):
             await ws.send(json.dumps(users[m[1]]))
 
 async def main():
-    async with serve(echo, "54.242.116.71", 8766):
+    async with serve(echo, "0.0.0.0", 8766):
         print('lala')
         await asyncio.Future()  # run forever
 
