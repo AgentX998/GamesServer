@@ -188,7 +188,7 @@ async def echo(ws:WebSocketServerProtocol):
             await ws.send(json.dumps(users[m[1]]))
 
 async def main():
-    async with serve(echo, "localhost", 8766):
+    async with serve(echo, "54.242.116.71", 8766):
         print('lala')
         await asyncio.Future()  # run forever
 

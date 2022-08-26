@@ -13,4 +13,4 @@ def my_scores():
     value=request.json['email']
     return read_scores_email(value)
 if __name__ == '__main__':
-    app.run(host="localhost", port=8000, debug=True)
+    app.run(host="54.242.116.71", port=8000, debug=True)
