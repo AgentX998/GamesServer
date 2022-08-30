@@ -72,7 +72,7 @@ def add_to_game(email,id,type):
         'email':''
       }
     temp['carType'] = type
-    temp['email'] = img(email)
+    temp['email'] = email
     games[id]['players'].append(temp)
     users[email]['gameData'] = games[id]
     users[email]['message']="Added to game"
@@ -87,8 +87,8 @@ def create_game(game_type,email,id,type,num):
     "type":"random",#random
     "timestamp_created":0,
     "light": 0,
-    #"sentence": lines[random.randint(0,8273)][:-1],
-    "sentence": lines[0][:-1],
+    "sentence": lines[random.randint(0,8273)][:-1],
+    #"sentence": lines[0][:-1],
     "noOfPlayers": 2,
     "joined":0,
     "players": [

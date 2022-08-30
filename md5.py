@@ -11,3 +11,6 @@ def img(email):
         email.lower().encode(encoding='UTF-8', errors='strict')).hexdigest() + "?"
     gravatar_url += urllib.parse.urlencode({'d': default, 's': str(size)})
     return gravatar_url
+
+#print(img('f138145@nu.edu.pk'))
+#print(img('mehfoozijaz786@gmail.com'))
