@@ -87,7 +87,7 @@ def create_game(game_type,email,id,type,num):
     "timestamp_created":0,
     "light": 0,
     #"sentence": lines[random.randint(0,8273)],
-    "sentence": lines[0],
+    "sentence": lines[0][:-1],
     "noOfPlayers": 2,
     "joined":0,
     "players": [
