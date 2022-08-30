@@ -45,7 +45,7 @@ def update_vals(id):
         games[id]['light']=l
         if l == 2 and t>0:
             games[id]['time'] = str(int(t / 60)) + ":" + str(int(t % 60))
-            total = len(games[id]['sentence'])
+            total = len(games[id]['sentence'].split(" "))
 
             for pl in games[id]['players']:
                 curr = int(pl["currentWord"])
@@ -174,7 +174,7 @@ async def echo(ws:WebSocketServerProtocol):
             if not users[m[1]]['gameData'] is {} and users[m[1]]['gameData']['light']==2:
                 gid=str(users[m[1]]['gameData']['id'])
                 count = int(users[m[1]]['currentWord'])
-                total = len(games[gid]['sentence'])
+                total = len(games[gid]['sentence'].split(" "))
                 if(total>count):
                     users[m[1]]['currentWord'] = count + 1
                     mi = users[m[1]]['myIndex']
