@@ -3,6 +3,7 @@ import json
 import random
 import time
 from db import insert_score
+from md5 import img
 from websockets import serve
 from websockets import WebSocketServerProtocol
 # This is a sample Python script.
@@ -71,7 +72,7 @@ def add_to_game(email,id,type):
         'email':''
       }
     temp['carType'] = type
-    temp['email'] = email
+    temp['email'] = img(email)
     games[id]['players'].append(temp)
     users[email]['gameData'] = games[id]
     users[email]['message']="Added to game"
