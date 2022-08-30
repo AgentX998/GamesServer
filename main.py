@@ -17,10 +17,10 @@ games=dict()
 
 f = open('l4.txt','r')
 lines = f.readlines()
-print(lines[0])
+#print(lines[0])
 #paragraph='I cant tell you that this is definitely gonna work out, theres no guarantees. But if this turns out to be a big mistake, then lets make it the most fun, big mistake weve ever made.'
 #xx= paragraph.split(" ")
-#print(len(xx))
+##print(len(xx))
 
 
 
@@ -29,10 +29,10 @@ ID=1
 
 def update_vals(id):
     if int(games[id]['joined']) == int(games[id]['noOfPlayers']):
-        print('calc')
+        #print('calc')
         t = int(time.time() * 1000)
-        print(t)
-        print(int(games[id]["timestamp_created"]))
+        #print(t)
+        #print(int(games[id]["timestamp_created"]))
         t = t - int(games[id]["timestamp_created"])
         t=int(t/1000)
         l=2
@@ -40,7 +40,7 @@ def update_vals(id):
             l = 1
         if(t<2):
             l=0
-        print(t-6)
+        #print(t-6)
         t = int(t - 6)
         games[id]['light']=l
         if l == 2 and t>0:
@@ -50,9 +50,9 @@ def update_vals(id):
             for pl in games[id]['players']:
                 curr = int(pl["currentWord"])
                 percent = int(curr / total * 100)
-                print(curr)
-                print(total)
-                print(t)
+                #print(curr)
+                #print(total)
+                #print(t)
 
                 pl["percentageCompleted"]=str(percent)
                 if pl["percentageCompleted"]!='100':
@@ -60,7 +60,7 @@ def update_vals(id):
 
 
 def add_to_game(email,id,type):
-    print('add'+id)
+    #print('add'+id)
     users[email]['myIndex']=games[id]['joined']
     games[id]['joined'] = games[id]['joined'] + 1
     temp = {
@@ -105,11 +105,11 @@ def create_game(game_type,email,id,type,num):
 async def echo(ws:WebSocketServerProtocol):
     global ID
     async for message in ws:
-        print(message)
+        #print(message)
         m=message.split(' ')
         code=m[0]
         if (code=="1"):
-            print("InShaAllah")#m is email
+            #print("InShaAllah")#m is email
             temp={
     "currentWord": 0,
     "myIndex": 0,
@@ -121,18 +121,18 @@ async def echo(ws:WebSocketServerProtocol):
             temp['message']='connected'
             users[m[1]]=temp
             await ws.send(json.dumps(users[m[1]]))
-            print(json.dumps(users[m[1]]))
+            #print(json.dumps(users[m[1]]))
         if (code == "2"):#join random game
             num_of_players=int(m[2])
             added=False
             for key in games:
-                print(key+'data')
-                print(games[key]['type'])
-                print(games[key]['noOfPlayers'])
-                print(num_of_players)
-                print(int(games[key]["noOfPlayers"]))
-                print(games[key]['joined'] <int(games[key]["noOfPlayers"]))
-                print('data')
+                #print(key+'data')
+                #print(games[key]['type'])
+                #print(games[key]['noOfPlayers'])
+                #print(num_of_players)
+                #print(int(games[key]["noOfPlayers"]))
+                #print(games[key]['joined'] <int(games[key]["noOfPlayers"]))
+                #print('data')
                 if games[key]['type']=='random' and int(games[key]['noOfPlayers'])==num_of_players\
                         and games[key]['joined'] <int(games[key]["noOfPlayers"]):
                     cont=False
@@ -148,12 +148,12 @@ async def echo(ws:WebSocketServerProtocol):
                 create_game("random", m[1], str(ID), m[3], m[2])
                 ID=ID+1
             await ws.send(json.dumps(users[m[1]]))
-            print("InShaAllah")
-            print(games)
+            #print("InShaAllah")
+            #print(games)
         if (code == "3"):
             create_game("random", m[1], str(ID), m[3], m[2])
             ID = ID + 1
-            print("InShaAllah")#create new game ID
+            #print("InShaAllah")#create new game ID
             await ws.send(json.dumps(users[m[1]]))
         if (code == "4"):
             if not m[2] in games:
@@ -161,16 +161,16 @@ async def echo(ws:WebSocketServerProtocol):
             else:
                 if int(games[m[2]]['joined']) <int(games[m[2]]["noOfPlayers"]):
                     add_to_game(m[1], m[2], m[3])
-            print("InShaAllah")#join game id, m is game id
+            #print("InShaAllah")#join game id, m is game id
             await ws.send(json.dumps(users[m[1]]))
         if (code == "5"):
-            print("InShaAllah")  #request update
+            #print("InShaAllah")  #request update
             if not users[m[1]]['gameData'] is {}:
                 update_vals(str(users[m[1]]['gameData']['id']))
                 users[m[1]]['gameData'] = games[str(users[m[1]]['gameData']['id'])]
             await ws.send(json.dumps(users[m[1]]))
         if (code == "6"):
-            print("InShaAllah")  #m is word count, update word count
+            #print("InShaAllah")  #m is word count, update word count
             if not users[m[1]]['gameData'] is {} and users[m[1]]['gameData']['light']==2:
                 gid=str(users[m[1]]['gameData']['id'])
                 count = int(users[m[1]]['currentWord'])
