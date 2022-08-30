@@ -175,7 +175,19 @@ async def echo(ws:WebSocketServerProtocol):
                 gid=str(users[m[1]]['gameData']['id'])
                 count = int(users[m[1]]['currentWord'])
                 total = len(games[gid]['sentence'].split(" "))
+                print('=============================')
+                print('=============================')
+                print('=============================')
+                print('=============================')
+                print('total')
+                print(total)
+                print('count')
                 if(total>count):
+                    print('=============================')
+                    print('total')
+                    print(total)
+                    print('count')
+                    print(count)
                     users[m[1]]['currentWord'] = count + 1
                     mi = users[m[1]]['myIndex']
                     games[gid]['players'][int(mi)]['currentWord'] = count + 1
