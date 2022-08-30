@@ -72,7 +72,7 @@ def add_to_game(email,id,type):
         'email':''
       }
     temp['carType'] = type
-    temp['email'] = hashlib.md5(email)
+    temp['email'] = hashlib.md5(email.encode('utf-8'))
     games[id]['players'].append(temp)
     users[email]['gameData'] = games[id]
     users[email]['message']="Added to game"
