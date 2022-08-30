@@ -1,5 +1,4 @@
 import asyncio
-import hashlib
 import json
 import random
 import time
@@ -72,7 +71,7 @@ def add_to_game(email,id,type):
         'email':''
       }
     temp['carType'] = type
-    temp['email'] = hashlib.md5(email.encode('utf-8'))
+    temp['email'] = email
     games[id]['players'].append(temp)
     users[email]['gameData'] = games[id]
     users[email]['message']="Added to game"
