@@ -16,5 +16,5 @@ def my_scores():
     return read_scores_email(value)
 if __name__ == '__main__':
     #app.run(host="0.0.0.0", port=8000, debug=True,ssl_context='adhoc')
-    app.run(host="0.0.0.0", port=8000, debug=True, ssl_context=('server.crt', 'server.key'))
+    app.run(host="0.0.0.0", port=8000, debug=True, ssl_context=('~/project/typearn/server.crt', '~/project/typearn/server.key'))
     #ssl_context=('server.crt', 'server.key')
