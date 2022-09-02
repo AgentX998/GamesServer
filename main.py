@@ -62,6 +62,7 @@ def update_vals(id):
 
 def add_to_game(email,id,type):
     #print('add'+id)
+    users[email]['currentWord']=0;
     users[email]['myIndex']=games[id]['joined']
     games[id]['joined'] = games[id]['joined'] + 1
     temp = {
