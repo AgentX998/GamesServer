@@ -1,6 +1,8 @@
 import asyncio
 import json
+import pathlib
 import random
+import ssl
 import time
 from db import insert_score
 from md5 import img
@@ -208,7 +210,11 @@ async def echo(ws:WebSocketServerProtocol):
             await ws.send(json.dumps(users[m[1]]))
 
 async def main():
-    async with serve(echo, "0.0.0.0", 8766):
+    ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    path_cert = pathlib.Path(__file__).with_name("cert.pem")
+    path_key = pathlib.Path(__file__).with_name("key.pem")
+    ssl_context.load_cert_chain(path_cert, keyfile=path_key)
+    async with serve(echo, "0.0.0.0", 8766, ssl=ssl_context):
         print('lala')
         await asyncio.Future()  # run forever
 
