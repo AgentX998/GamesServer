@@ -96,6 +96,9 @@ def create_game(game_type,email,id,type,num):
     "joined":0,
     "players": [
 
+    ],
+    "positions": [
+
     ]
   }
     temp['id']=str(id)
@@ -188,6 +191,9 @@ async def echo(ws:WebSocketServerProtocol):
                 print(total)
                 print('count')
                 if(total>count):
+                    if total==count+1:
+                        print('write condition to list position')
+                        games[gid]['positions'].insert(m[1])
                     print('=============================')
                     print('total')
                     print(total)
