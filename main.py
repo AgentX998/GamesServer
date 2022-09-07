@@ -192,9 +192,6 @@ async def echo(ws:WebSocketServerProtocol):
                 print(total)
                 print('count')
                 if(total>count):
-                    if total==count+1:
-                        print('write condition to list position')
-                        games[gid]['positions'].append(m[1])
                     print('=============================')
                     print('total')
                     print(total)
@@ -204,7 +201,14 @@ async def echo(ws:WebSocketServerProtocol):
                     mi = users[m[1]]['myIndex']
                     games[gid]['players'][int(mi)]['currentWord'] = count + 1
                     update_vals(gid)
+
                     users[m[1]]['gameData'] = games[gid]
+                    if total==count:
+                        print('write condition to list position')
+                        games[gid]['positions'].append({
+                            'email':m[1],
+                            'speed':games[gid]['players'][mi]['speed']
+                        })
                     if total-1 == count:
                         ti=int(time.time())
                         sp=int(games[gid]['players'][mi]['speed'])
