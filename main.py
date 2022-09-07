@@ -179,6 +179,7 @@ async def echo(ws:WebSocketServerProtocol):
             await ws.send(json.dumps(users[m[1]]))
         if (code == "6"):
             #print("InShaAllah")  #m is word count, update word count
+            print('inc')
             if not users[m[1]]['gameData'] is {} and users[m[1]]['gameData']['light']==2:
                 gid=str(users[m[1]]['gameData']['id'])
                 count = int(users[m[1]]['currentWord'])
