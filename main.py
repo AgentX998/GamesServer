@@ -194,7 +194,7 @@ async def echo(ws:WebSocketServerProtocol):
                 if(total>count):
                     if total==count+1:
                         print('write condition to list position')
-                        games[gid]['positions'].insert(m[1])
+                        games[gid]['positions'].append(m[1])
                     print('=============================')
                     print('total')
                     print(total)
@@ -221,7 +221,7 @@ async def main():
     path_cert = pathlib.Path(__file__).with_name("cert.pem")
     path_key = pathlib.Path(__file__).with_name("key.pem")
     ssl_context.load_cert_chain(path_cert, keyfile=path_key)
-    async with serve(echo, "0.0.0.0", 8766, ssl=ssl_context):
+    async with serve(echo, "0.0.0.0", 8766):
         print('lala')
         await asyncio.Future()  # run forever
 
