@@ -31,7 +31,8 @@ ID=1
 
 
 def update_vals(id):
-    if int(games[id]['joined']) == int(games[id]['noOfPlayers']) and int(games[id]['timestamp_created']) <int(time.time()*1000):
+    #if int(games[id]['joined']) == int(games[id]['noOfPlayers']) and
+    if int(games[id]['timestamp_created']) <int(time.time()*1000):
         #print('calc')
         t = int(time.time() * 1000)
         #print(t)
