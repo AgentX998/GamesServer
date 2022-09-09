@@ -33,6 +33,7 @@ ID=1
 def update_vals(id):
     #if int(games[id]['joined']) == int(games[id]['noOfPlayers']) and
     if int(games[id]['timestamp_created']) <int(time.time()*1000):
+        games[id]['timer'] = (int(games[id]['timestamp_created']) - int(time.time() * 1000)) / 1000
         #print('calc')
         t = int(time.time() * 1000)
         #print(t)
@@ -61,6 +62,8 @@ def update_vals(id):
                 pl["percentageCompleted"]=str(percent)
                 if pl["percentageCompleted"]!='100':
                     pl["speed"] = int(int(pl["currentWord"])/(t/60))
+    else:
+        games[id]['timer']=(int(games[id]['timestamp_created'])-int(time.time() * 1000))/1000
 
 
 def add_to_game(email,id,type):
@@ -90,6 +93,7 @@ def create_game(game_type,email,id,type,num):
     "time": "00:00",
     "type":"random",#random
     "timestamp_created":int((time.time()+30)*1000),
+    "timer":30,
     "light": 0,
     #"sentence": lines[random.randint(0,8273)][:-1],
     "sentence": lines[0][:-1],
