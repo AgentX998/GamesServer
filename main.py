@@ -143,7 +143,7 @@ async def echo(ws:WebSocketServerProtocol):
                 #print('data')
                 if games[key]['type']=='random' and int(games[key]['noOfPlayers'])==num_of_players\
                         and games[key]['joined'] <int(games[key]["noOfPlayers"])\
-                        and int(games[key]['timestamp_created']) <int(time.time()*1000):
+                        and int(games[key]['timestamp_created']) >int(time.time()*1000):
                     cont=False
                     for elem in games[key]['players']:
                         if elem['email']==m[1]:
@@ -169,7 +169,7 @@ async def echo(ws:WebSocketServerProtocol):
                 users[m[1]]['message']="ID does not exist"
             else:
                 if int(games[m[2]]['joined']) <int(games[m[2]]["noOfPlayers"])\
-                        and int(games[m[2]]['timestamp_created']) <int(time.time()*1000):
+                        and int(games[m[2]]['timestamp_created']) >int(time.time()*1000):
                     add_to_game(m[1], m[2], m[3])
             #print("InShaAllah")#join game id, m is game id
             await ws.send(json.dumps(users[m[1]]))
