@@ -31,7 +31,7 @@ ID=1
 
 
 def update_vals(id):
-    if int(games[id]['joined']) == int(games[id]['noOfPlayers']):
+    if int(games[id]['joined']) == int(games[id]['noOfPlayers']) and int(games[id]['timestamp_created']) <int(time.time()*1000):
         #print('calc')
         t = int(time.time() * 1000)
         #print(t)
@@ -79,8 +79,8 @@ def add_to_game(email,id,type):
     games[id]['players'].append(temp)
     users[email]['gameData'] = games[id]
     users[email]['message']="Added to game"
-    if int(games[id]['joined']) == int(games[id]['noOfPlayers']):
-        games[id]['timestamp_created']=int(time.time()*1000)
+    #if int(games[id]['joined']) == int(games[id]['noOfPlayers']):
+    #    games[id]['timestamp_created']=int(time.time()*1000)
 
 
 def create_game(game_type,email,id,type,num):
@@ -88,7 +88,7 @@ def create_game(game_type,email,id,type,num):
     "id":"",
     "time": "00:00",
     "type":"random",#random
-    "timestamp_created":0,
+    "timestamp_created":int((time.time()+30)*1000),
     "light": 0,
     #"sentence": lines[random.randint(0,8273)][:-1],
     "sentence": lines[0][:-1],
@@ -142,7 +142,8 @@ async def echo(ws:WebSocketServerProtocol):
                 #print(games[key]['joined'] <int(games[key]["noOfPlayers"]))
                 #print('data')
                 if games[key]['type']=='random' and int(games[key]['noOfPlayers'])==num_of_players\
-                        and games[key]['joined'] <int(games[key]["noOfPlayers"]):
+                        and games[key]['joined'] <int(games[key]["noOfPlayers"])\
+                        and int(games[key]['timestamp_created']) <int(time.time()*1000):
                     cont=False
                     for elem in games[key]['players']:
                         if elem['email']==m[1]:
@@ -167,7 +168,8 @@ async def echo(ws:WebSocketServerProtocol):
             if not m[2] in games:
                 users[m[1]]['message']="ID does not exist"
             else:
-                if int(games[m[2]]['joined']) <int(games[m[2]]["noOfPlayers"]):
+                if int(games[m[2]]['joined']) <int(games[m[2]]["noOfPlayers"])\
+                        and int(games[m[2]]['timestamp_created']) <int(time.time()*1000):
                     add_to_game(m[1], m[2], m[3])
             #print("InShaAllah")#join game id, m is game id
             await ws.send(json.dumps(users[m[1]]))
