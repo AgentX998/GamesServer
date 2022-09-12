@@ -4,7 +4,7 @@ import pathlib
 import random
 import ssl
 import time
-from db import insert_score
+from db import insert_score, user_exists, get_user, insert_address
 from md5 import img
 from websockets import serve
 from websockets import WebSocketServerProtocol
@@ -119,8 +119,12 @@ async def echo(ws:WebSocketServerProtocol):
     global ID
     async for message in ws:
         #print(message)
-        m=message.split(' ')
-        code=m[0]
+        if(message[0]=='9'):
+            m = message.split('\n')
+            code = m[0]
+        else:
+            m = message.split(' ')
+            code = m[0]
         if (code=="1"):
             #print("InShaAllah")#m is email
             temp={
@@ -226,6 +230,19 @@ async def echo(ws:WebSocketServerProtocol):
             print("InShaAllah")  #leave current game
             users[m[1]]['gameData']={}
             await ws.send(json.dumps(users[m[1]]))
+        if (code == "8"): #address
+            print("InShaAllah")  #leave current game
+            if(user_exists(m[1])):
+                await ws.send(json.dumps({"auth":{"exists":"yes", "data":get_user(m[1])}}))
+            else:
+                await ws.send(json.dumps({"auth": {"exists": "no"}}))
+        if (code == "9"): #address
+            print("InShaAllah")  #leave current game
+            if(user_exists(m[1])):
+                await ws.send(json.dumps({"auth":{"exists":"yes"}}))
+            else:
+                insert_address(m[1],m[2],m[3])
+                await ws.send(json.dumps({"auth": "user_created"}))
 
 async def main():
     ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
