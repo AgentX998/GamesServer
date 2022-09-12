@@ -140,17 +140,12 @@ async def echo(ws:WebSocketServerProtocol):
             await ws.send(json.dumps(users[m[1]]))
             #print(json.dumps(users[m[1]]))
         if (code == "2"):#join random game
+            print("joining")
             num_of_players=int(m[2])
             added=False
             for key in games:
-                #print(key+'data')
-                #print(games[key]['type'])
-                #print(games[key]['noOfPlayers'])
-                #print(num_of_players)
-                #print(int(games[key]["noOfPlayers"]))
-                #print(games[key]['joined'] <int(games[key]["noOfPlayers"]))
-                #print('data')
-                if games[key]['type']=='random' and int(games[key]['noOfPlayers'])==num_of_players\
+                if games[key]['type']=='random' \
+                        and int(games[key]['noOfPlayers'])==num_of_players\
                         and games[key]['joined'] <int(games[key]["noOfPlayers"])\
                         and int(games[key]['timestamp_created']) >int(time.time()*1000):
                     cont=False
@@ -166,6 +161,7 @@ async def echo(ws:WebSocketServerProtocol):
                 print("creating")
                 create_game("random", m[1], str(ID), m[3], m[2])
                 ID=ID+1
+                print(ID)
             await ws.send(json.dumps(users[m[1]]))
             #print("InShaAllah")
             #print(games)
