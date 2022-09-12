@@ -58,7 +58,7 @@ def user_exists(address):
     #print("INSERT INTO SCORES (EMAIL, TIME, SCORE) \
     #      VALUES ('{}',{},{})".format(email,time,score))
     conn = sqlite3.connect('typearn.db')
-    cursor = conn.execute("SELECT address,name,photo from users where address='{}'".format(address))
+    cursor = conn.execute("SELECT address,name,email,photo from users where address='{}'".format(address))
     exist=False
     for r in cursor:
         exist=True
@@ -68,18 +68,19 @@ def get_user(address):
     #print("INSERT INTO SCORES (EMAIL, TIME, SCORE) \
     #      VALUES ('{}',{},{})".format(email,time,score))
     conn = sqlite3.connect('typearn.db')
-    cursor = conn.execute("SELECT address,name,photo from users where address='{}'".format(address))
+    cursor = conn.execute("SELECT address,name,email,photo from users where address='{}'".format(address))
     exist=False
     for r in cursor:
         data['address']=r[0]
         data['name'] =r[1]
-        data['photo'] =r[2]
+        data['email'] = r[2]
+        data['photo'] =r[3]
     return data
-def insert_address(address,name,photo):
+def insert_address(address,name,email,photo):
     conn = sqlite3.connect('typearn.db')
 
-    conn.execute("INSERT INTO USERS (address,name,photo) VALUES ('{}','{}','{}')".format(address,name,photo))
+    conn.execute("INSERT INTO USERS (address,name,email,photo) VALUES ('{}','{}','{}','{}')".format(address,name,email,photo))
     conn.commit()
     conn.close()
 print(user_exists('dummy'))
-#insert_address('dummy','dummy','dummy')
+#insert_address('dummy','dummy','dummy','dummy')
