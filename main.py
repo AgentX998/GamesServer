@@ -163,6 +163,7 @@ async def echo(ws:WebSocketServerProtocol):
                     added=True
                     break;
             if not added:
+                print("creating")
                 create_game("random", m[1], str(ID), m[3], m[2])
                 ID=ID+1
             await ws.send(json.dumps(users[m[1]]))
@@ -241,7 +242,7 @@ async def echo(ws:WebSocketServerProtocol):
             if(user_exists(m[1])):
                 await ws.send(json.dumps({"auth":{"exists":"yes"}}))
             else:
-                insert_address(m[1],m[2],m[3])
+                insert_address(m[1],m[2],m[3],m[4])
                 await ws.send(json.dumps({"auth": "user_created"}))
 
 async def main():
