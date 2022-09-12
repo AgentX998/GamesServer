@@ -126,6 +126,7 @@ async def echo(ws:WebSocketServerProtocol):
             m = message.split(' ')
             code = m[0]
         if (code=="1"):
+            print("ADD user")
             #print("InShaAllah")#m is email
             temp={
     "currentWord": 0,
