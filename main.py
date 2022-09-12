@@ -233,7 +233,7 @@ async def echo(ws:WebSocketServerProtocol):
             if(user_exists(m[1])):
                 await ws.send(json.dumps({"auth":{"exists":"yes", "data":get_user(m[1])}}))
             else:
-                await ws.send(json.dumps({"auth": {"exists": "no"}}))
+                await ws.send(json.dumps({"auth": {"exists": "no","address":m[1]}}))
         if (code == "9"): #address
             print("InShaAllah")  #leave current game
             if(user_exists(m[1])):
