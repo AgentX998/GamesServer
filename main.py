@@ -95,8 +95,8 @@ def create_game(game_type,email,id,type,num):
     "timestamp_created":int((time.time()+30)*1000),
     "timer":30,
     "light": 0,
-    #"sentence": lines[random.randint(0,8273)][:-1],
-    "sentence": lines[0][:-1],
+    "sentence": lines[random.randint(0,8273)][:-1],
+    #"sentence": lines[0][:-1],
     "noOfPlayers": 2,
     "joined":0,
     "players": [
@@ -212,7 +212,7 @@ async def echo(ws:WebSocketServerProtocol):
                     update_vals(gid)
 
                     users[m[1]]['gameData'] = games[gid]
-                    if total==count:
+                    if total==count+1:
                         print('write condition to list position')
                         games[gid]['positions'].append({
                             'email':m[1],
