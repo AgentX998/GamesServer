@@ -156,6 +156,7 @@ async def echo(ws:WebSocketServerProtocol):
                     if cont:
                         continue
                     add_to_game(m[1], key, m[2])
+                    print("key"+str(key))
                     added=True
                     break;
             if not added:
@@ -183,6 +184,7 @@ async def echo(ws:WebSocketServerProtocol):
         if (code == "5"):
             #print("InShaAllah")  #request update
             if not users[m[1]]['gameData'] is {}:
+                print("5 " + str(users[m[1]]['gameData']['id']))
                 update_vals(str(users[m[1]]['gameData']['id']))
                 users[m[1]]['gameData'] = games[str(users[m[1]]['gameData']['id'])]
             await ws.send(json.dumps(users[m[1]]))
