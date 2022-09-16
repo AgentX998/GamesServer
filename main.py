@@ -183,7 +183,7 @@ async def echo(ws:WebSocketServerProtocol):
             await ws.send(json.dumps(users[m[1]]))
         if (code == "5"):
             #print("InShaAllah")  #request update
-            if users[m[1]]['gameData'] is not {}:
+            if users[m[1]]['gameData'] != {}:
                 print('lala')
                 print(users[m[1]]['gameData'])
                 print('lala')
