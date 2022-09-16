@@ -184,6 +184,9 @@ async def echo(ws:WebSocketServerProtocol):
         if (code == "5"):
             #print("InShaAllah")  #request update
             if not users[m[1]]['gameData'] is {}:
+                print('lala')
+                print(users[m[1]]['gameData'])
+                print('lala')
                 print("5 " + str(users[m[1]]['gameData']['id']))
                 update_vals(str(users[m[1]]['gameData']['id']))
                 users[m[1]]['gameData'] = games[str(users[m[1]]['gameData']['id'])]
