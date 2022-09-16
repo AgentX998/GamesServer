@@ -4,7 +4,7 @@ import pathlib
 import random
 import ssl
 import time
-from db import insert_score, user_exists, get_user, insert_address
+from db import insert_score, user_exists, get_user, insert_address,get_photo
 from md5 import img
 from websockets import serve
 from websockets import WebSocketServerProtocol
@@ -118,7 +118,7 @@ def create_game(game_type,email,id,type,num):
 async def echo(ws:WebSocketServerProtocol):
     global ID
     async for message in ws:
-        #print(message)
+        print(message)
         if(message[0]=='9'):
             m = message.split('\n')
             code = m[0]
@@ -218,10 +218,10 @@ async def echo(ws:WebSocketServerProtocol):
                             'email':m[1],
                             'speed':games[gid]['players'][mi]['speed']
                         })
-                    if total-1 == count and int(users[m[1]]['joined'])<1:
+                    if total-1 == count and int(users[m[1]]['joined'])>1:
                         ti=int(time.time())
                         sp=int(games[gid]['players'][mi]['speed'])
-                        insert_score(m[1], ti, sp)
+                        insert_score(m[1], ti, sp, get_photo(m[1]))
 
             await ws.send(json.dumps(users[m[1]]))
         if (code == "7"):

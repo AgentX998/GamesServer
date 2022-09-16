@@ -1,12 +1,22 @@
 import sqlite3
 import time
 
-def insert_score(email,time,score):
+def get_photo(email):
+    data={}
+    #print("INSERT INTO SCORES (EMAIL, TIME, SCORE) \
+    #      VALUES ('{}',{},{})".format(email,time,score))
+    conn = sqlite3.connect('typearn.db')
+    cursor = conn.execute("SELECT photo from users where email='{}'".format(email))
+    exist=False
+    for r in cursor:
+        return r[0]
+    return 'lala'
+def insert_score(email,time,score,photo):
     #print("INSERT INTO SCORES (EMAIL, TIME, SCORE) \
     #      VALUES ('{}',{},{})".format(email,time,score))
     conn = sqlite3.connect('typearn.db')
 
-    conn.execute("INSERT INTO SCORES (EMAIL, TIME, SCORE) VALUES ('{}',{},{})".format(email,time,score))
+    conn.execute("INSERT INTO SCORES2 (EMAIL, TIME, SCORE,PHOTO) VALUES ('{}',{},{},'{}')".format(email,time,score,photo))
     conn.commit()
     conn.close()
 
@@ -15,11 +25,12 @@ def read_scores():
     #print("INSERT INTO SCORES (EMAIL, TIME, SCORE) \
     #      VALUES ('{}',{},{})".format(email,time,score))
     conn = sqlite3.connect('typearn.db')
-    cursor = conn.execute("SELECT email,time,score from scores order by score desc")
+    cursor = conn.execute("SELECT email,time,score, photo from scores2 order by score desc")
     for r in cursor:
         data['data'].append({'email':r[0],
                              'time':r[1],
-                             'score':r[2]})
+                             'score':r[2],
+                             'photo':r[3]})
     return data
 
     print(cursor)
@@ -31,11 +42,12 @@ def read_scores_latest():
     #print("INSERT INTO SCORES (EMAIL, TIME, SCORE) \
     #      VALUES ('{}',{},{})".format(email,time,score))
     conn = sqlite3.connect('typearn.db')
-    cursor = conn.execute("SELECT email,time,score from scores where time>{} order by score desc".format(t))
+    cursor = conn.execute("SELECT email,time,score, photo from scores2 where time>{} order by score desc".format(t))
     for r in cursor:
         data['data'].append({'email':r[0],
                              'time':r[1],
-                             'score':r[2]})
+                             'score':r[2],
+                             'photo':r[3]})
     return data
 
 
@@ -44,11 +56,12 @@ def read_scores_email(email):
     #print("INSERT INTO SCORES (EMAIL, TIME, SCORE) \
     #      VALUES ('{}',{},{})".format(email,time,score))
     conn = sqlite3.connect('typearn.db')
-    cursor = conn.execute("SELECT email,time,score from scores where email='{}' order by score desc".format(email))
+    cursor = conn.execute("SELECT email,time,score,photo from scores2 where email='{}' order by score desc".format(email))
     for r in cursor:
         data['data'].append({'email':r[0],
                              'time':r[1],
-                             'score':r[2]})
+                             'score':r[2],
+                             'photo':r[3]})
     return data
 
     print(cursor)
@@ -63,6 +76,7 @@ def user_exists(address):
     for r in cursor:
         exist=True
     return exist
+
 def get_user(address):
     data={}
     #print("INSERT INTO SCORES (EMAIL, TIME, SCORE) \
@@ -83,4 +97,6 @@ def insert_address(address,name,email,photo):
     conn.commit()
     conn.close()
 print(user_exists('dummy'))
+print(get_photo('dummy'))
 #insert_address('dummy','dummy','dummy','dummy')
+print(read_scores())
