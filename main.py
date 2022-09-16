@@ -218,7 +218,7 @@ async def echo(ws:WebSocketServerProtocol):
                             'email':m[1],
                             'speed':games[gid]['players'][mi]['speed']
                         })
-                    if total-1 == count:
+                    if total-1 == count and int(users[m[1]]['joined'])<1:
                         ti=int(time.time())
                         sp=int(games[gid]['players'][mi]['speed'])
                         insert_score(m[1], ti, sp)
