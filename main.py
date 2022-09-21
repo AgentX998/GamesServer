@@ -4,7 +4,7 @@ import pathlib
 import random
 import ssl
 import time
-from db import insert_score, user_exists, get_user, insert_address,get_photo
+from db import insert_score, user_exists, get_user, insert_address,get_photo, get_user_by_email, get_email
 from md5 import img
 from websockets import serve
 from websockets import WebSocketServerProtocol
@@ -131,6 +131,7 @@ async def echo(ws:WebSocketServerProtocol):
             temp={
     "currentWord": 0,
     "myIndex": 0,
+    "dashboard":get_user_by_email(m[1]),
     "email":"Muhammad.Abdullah.Shahid@gmail.com",
     "message":"Connected",#connected, room full,
     "gameData": {}
@@ -234,22 +235,24 @@ async def echo(ws:WebSocketServerProtocol):
             users[m[1]]['gameData']={}
             await ws.send(json.dumps(users[m[1]]))
         if (code == "8"): #address
-            print("InShaAllah")  #leave current game
+            print("InShaAllah")
             if(user_exists(m[1])):
                 await ws.send(json.dumps({"auth":{"exists":"yes", "data":get_user(m[1])}}))
             else:
                 await ws.send(json.dumps({"auth": {"exists": "no","address":m[1]}}))
         if (code == "9"): #address
-            print("InShaAllah")  #leave current game
+            print("InShaAllah")
             if(user_exists(m[1])):
                 await ws.send(json.dumps({"auth":{"exists":"yes"}}))
             else:
                 insert_address(m[1],m[2],m[3],m[4])
                 await ws.send(json.dumps({"auth": "user_created"}))
         if (code == "10"): #address
-            print("InShaAllah")  #leave current game
+            print("InShaAllah")
             if(user_exists(m[1])):
                 insert_address(m[1], m[2])
+                EMAIL=get_email(m[1])
+                users[EMAIL]['dashboard']=get_user_by_email(EMAIL)
                 await ws.send(json.dumps({"auth": "updated"}))
 
 

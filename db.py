@@ -11,6 +11,16 @@ def get_photo(email):
     for r in cursor:
         return r[0]
     return 'lala'
+def get_email(address):
+    data={}
+    #print("INSERT INTO SCORES (EMAIL, TIME, SCORE) \
+    #      VALUES ('{}',{},{})".format(email,time,score))
+    conn = sqlite3.connect('typearn.db')
+    cursor = conn.execute("SELECT email from users where address='{}'".format(address))
+    exist=False
+    for r in cursor:
+        return r[0]
+    return 'lala'
 def insert_score(email,time,score,photo):
     #print("INSERT INTO SCORES (EMAIL, TIME, SCORE) \
     #      VALUES ('{}',{},{})".format(email,time,score))
@@ -97,6 +107,20 @@ def get_user(address):
     #      VALUES ('{}',{},{})".format(email,time,score))
     conn = sqlite3.connect('typearn.db')
     cursor = conn.execute("SELECT address,name,email,photo from users where address='{}'".format(address))
+    exist=False
+    for r in cursor:
+        data['address']=r[0]
+        data['name'] =r[1]
+        data['email'] = r[2]
+        data['photo'] =r[3]
+        data['average'] = read_average(r[2])
+    return data
+def get_user_by_email(email):
+    data={}
+    #print("INSERT INTO SCORES (EMAIL, TIME, SCORE) \
+    #      VALUES ('{}',{},{})".format(email,time,score))
+    conn = sqlite3.connect('typearn.db')
+    cursor = conn.execute("SELECT address,name,email,photo from users where email='{}'".format(email))
     exist=False
     for r in cursor:
         data['address']=r[0]
