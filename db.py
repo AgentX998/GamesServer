@@ -77,6 +77,20 @@ def user_exists(address):
         exist=True
     return exist
 
+
+
+def read_average(email):
+    data={'data':[]}
+    #print("INSERT INTO SCORES (EMAIL, TIME, SCORE) \
+    #      VALUES ('{}',{},{})".format(email,time,score))
+    conn = sqlite3.connect('typearn.db')
+    cursor = conn.execute("SELECT avg(score)from scores2 where email='{}' order by score desc limit 10".format(email))
+    for r in cursor:
+        if r[0]==None:
+            return 0
+        return r[0]
+
+    print(cursor)
 def get_user(address):
     data={}
     #print("INSERT INTO SCORES (EMAIL, TIME, SCORE) \
@@ -89,6 +103,7 @@ def get_user(address):
         data['name'] =r[1]
         data['email'] = r[2]
         data['photo'] =r[3]
+        data['average'] = read_average(r[2])
     return data
 def insert_address(address,name,email,photo):
     conn = sqlite3.connect('typearn.db')
@@ -96,7 +111,17 @@ def insert_address(address,name,email,photo):
     conn.execute("INSERT INTO USERS (address,name,email,photo) VALUES ('{}','{}','{}','{}')".format(address,name,email,photo))
     conn.commit()
     conn.close()
-print(user_exists('dummy'))
-print(get_photo('dummy'))
+def update_photo(address,photo):
+    conn = sqlite3.connect('typearn.db')
+
+    conn.execute("UPDATE USERS SET photo='{}' WHERE address='{}'".format(photo,address))
+    conn.commit()
+    conn.close()
+
+#print(user_exists('dummy'))
+#print(get_photo('dummy'))
 #insert_address('dummy','dummy','dummy','dummy')
-print(read_scores())
+#print(read_scores())
+#update_photo('dummy','done')
+print(get_user('dummy'))
+#print(read_average('dummy2'))

@@ -119,7 +119,7 @@ async def echo(ws:WebSocketServerProtocol):
     global ID
     async for message in ws:
         print(message)
-        if(message[0]=='9'):
+        if(message[0]=='9' or message[0]=='10'):
             m = message.split('\n')
             code = m[0]
         else:
@@ -246,6 +246,12 @@ async def echo(ws:WebSocketServerProtocol):
             else:
                 insert_address(m[1],m[2],m[3],m[4])
                 await ws.send(json.dumps({"auth": "user_created"}))
+        if (code == "10"): #address
+            print("InShaAllah")  #leave current game
+            if(user_exists(m[1])):
+                insert_address(m[1], m[2])
+                await ws.send(json.dumps({"auth": "updated"}))
+
 
 async def main():
     ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
