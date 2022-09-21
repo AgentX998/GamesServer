@@ -119,7 +119,7 @@ async def echo(ws:WebSocketServerProtocol):
     global ID
     async for message in ws:
         print(message)
-        if(message[0]=='9' or message[0]=='10'):
+        if(message[0]=='9' or (message[0]=='1' and message[1]=='0')):
             m = message.split('\n')
             code = m[0]
         else:
