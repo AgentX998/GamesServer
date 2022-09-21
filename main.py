@@ -4,7 +4,7 @@ import pathlib
 import random
 import ssl
 import time
-from db import insert_score, user_exists, get_user, insert_address,get_photo, get_user_by_email, get_email
+from db import insert_score, user_exists, get_user, insert_address,get_photo, get_user_by_email, get_email, update_photo
 from md5 import img
 from websockets import serve
 from websockets import WebSocketServerProtocol
@@ -250,7 +250,7 @@ async def echo(ws:WebSocketServerProtocol):
         if (code == "10"): #address
             print("InShaAllah")
             if(user_exists(m[1])):
-                insert_address(m[1], m[2])
+                update_photo(m[1], m[2])
                 EMAIL=get_email(m[1])
                 users[EMAIL]['dashboard']=get_user_by_email(EMAIL)
                 await ws.send(json.dumps({"auth": "updated"}))
