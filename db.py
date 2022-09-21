@@ -84,7 +84,7 @@ def read_average(email):
     #print("INSERT INTO SCORES (EMAIL, TIME, SCORE) \
     #      VALUES ('{}',{},{})".format(email,time,score))
     conn = sqlite3.connect('typearn.db')
-    cursor = conn.execute("SELECT avg(score)from scores2 where email='{}' order by score desc limit 10".format(email))
+    cursor = conn.execute("SELECT avg(score)from scores2 where email='{}' order by time desc limit 10".format(email))
     for r in cursor:
         if r[0]==None:
             return 0
