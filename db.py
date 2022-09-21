@@ -137,10 +137,11 @@ def insert_address(address,name,email,photo):
     conn.close()
 def update_photo(address,photo):
     conn = sqlite3.connect('typearn.db')
-
-    conn.execute("UPDATE USERS SET photo='{}' WHERE address='{}'".format(photo,address))
+    sql = "UPDATE USERS SET photo='{}' WHERE address='{}'".format(photo,address)
+    cur = conn.cursor()
+    cur.execute(sql)
     conn.commit()
-    conn.close()
+    print('UPDATE_PHOTO')
 
 #print(user_exists('dummy'))
 #print(get_photo('dummy'))
@@ -149,3 +150,5 @@ def update_photo(address,photo):
 #update_photo('dummy','done')
 print(get_user('dummy'))
 #print(read_average('dummy2'))
+#update_photo('dummy','new2')
+#print(get_user('dummy'))
