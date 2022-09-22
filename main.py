@@ -253,12 +253,6 @@ async def echo(ws:WebSocketServerProtocol):
             EMAIL = get_email(m[1])
             users[EMAIL]['dashboard'] = get_user_by_email(EMAIL)
             await ws.send(json.dumps({"auth": "updated"}))
-        if (code == "10"): #address
-            print("InShaAllah")
-            update_photo(m[1], m[2])
-            EMAIL = get_email(m[1])
-            users[EMAIL]['dashboard'] = get_user_by_email(EMAIL)
-            await ws.send(json.dumps({"auth": "updated"}))
         if (code == "11"): #address
             print("InShaAllah")
             EMAIL = get_email(m[1])
