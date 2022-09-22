@@ -4,7 +4,7 @@ import pathlib
 import random
 import ssl
 import time
-from db import insert_score, user_exists, get_user, insert_address,get_photo, get_user_by_email, get_email, update_photo
+from db import insert_score, user_exists, get_user, insert_address,get_photo, get_photo_by_address, get_user_by_email, get_email, update_photo
 from md5 import img
 from websockets import serve
 from websockets import WebSocketServerProtocol
@@ -253,6 +253,17 @@ async def echo(ws:WebSocketServerProtocol):
             EMAIL = get_email(m[1])
             users[EMAIL]['dashboard'] = get_user_by_email(EMAIL)
             await ws.send(json.dumps({"auth": "updated"}))
+        if (code == "10"): #address
+            print("InShaAllah")
+            update_photo(m[1], m[2])
+            EMAIL = get_email(m[1])
+            users[EMAIL]['dashboard'] = get_user_by_email(EMAIL)
+            await ws.send(json.dumps({"auth": "updated"}))
+        if (code == "11"): #address
+            print("InShaAllah")
+            EMAIL = get_email(m[1])
+            users[EMAIL]['dashboard'] = get_user_by_email(EMAIL)
+            await ws.send(json.dumps({"user_image": get_photo_by_address(m[1])}))
 
 
 async def main():
