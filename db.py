@@ -136,7 +136,7 @@ def get_user_by_email(email):
         data['address']=r[0]
         data['name'] =r[1]
         data['email'] = r[2]
-        data['photo'] =r[3]
+        #data['photo'] =r[3]
         data['average'] = read_average(r[2])
     return data
 def insert_address(address,name,email,photo):
