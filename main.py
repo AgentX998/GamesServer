@@ -262,10 +262,13 @@ async def echo(ws:WebSocketServerProtocol):
 
 async def main():
     ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-    path_cert = pathlib.Path(__file__).with_name("cert.pem")
-    path_key = pathlib.Path(__file__).with_name("key.pem")
-    ssl_context.load_cert_chain(path_cert, keyfile=path_key)
-    async with serve(echo, "0.0.0.0", 8766):
+
+    # Generate with Lets Encrypt, copied to this location, chown to current user and 400 permissions
+    ssl_cert = "fullchain.pem"
+    ssl_key = "privkey.pem"
+
+    ssl_context.load_cert_chain(ssl_cert, keyfile=ssl_key)
+    async with serve(echo, "0.0.0.0", 8766, ssl=ssl_context):
         print('lala')
         await asyncio.Future()  # run forever
 
