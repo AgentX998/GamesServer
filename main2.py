@@ -15,6 +15,6 @@ def my_scores():
     value=request.json['email']
     return read_scores_email(value)
 if __name__ == '__main__':
-    #app.run(host="0.0.0.0", port=8000, debug=True,ssl_context='adhoc')
-    app.run(host="0.0.0.0", port=8000, debug=True)
-    #ssl_context=('server.crt', 'server.key')
+    app.run(host="0.0.0.0", port=8000, debug=True,ssl_context=('fullchain.pem', 'cert.key'))
+    #app.run(host="0.0.0.0", port=8000, debug=True)
+    #ssl_context=('fullchain.pem', 'cert.key')
